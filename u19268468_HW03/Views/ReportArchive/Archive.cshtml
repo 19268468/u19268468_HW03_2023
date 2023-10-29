@@ -1,0 +1,31 @@
+﻿@using u19268468_HW03.Models
+@{
+    ViewBag.Title = "Archive";
+}
+
+<h2>Archive</h2>
+
+<div>
+    <h4>Documents of any file type</h4>
+</div>
+<div style="height: 400px; overflow: auto;">
+    <table class="table table-hover">
+        <thead style="position: sticky; top: 0; background-color: lightgrey;">
+            <tr>
+                <th width="75%">FILE NAME</th>
+                <th>DOWNLOAD</th>
+                <th>DELETE</th>
+            </tr>
+        </thead>
+        @foreach (FileSaveModel file in Model)
+        {
+            <tr>
+                <td>@file.FileName</td>
+                <td class="t">@Html.ActionLink("Download", "DownloadFile", new { fileName = file.FileName }, new { @class = "btn btn-success btn-sm", style = "width: 150px;" })</td>
+                <td class="t">@Html.ActionLink("Delete", "DeleteFile", new { fileName = file.FileName }, new { @class = "btn btn-danger btn-sm", style = "width: 150px;" })</td>
+            </tr>
+
+
+        }
+    </table>
+</div>

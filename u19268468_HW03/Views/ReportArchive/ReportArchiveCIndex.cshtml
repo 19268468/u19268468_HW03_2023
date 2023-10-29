@@ -1,4 +1,4 @@
-﻿@model u19268468_HW03.Models.ReportArchiveModel
+﻿@model u19268468_HW03.Models.FileSaveModel
 @{
     ViewBag.Title = "ReportArchiveCIndex";
 }
@@ -13,7 +13,29 @@
     @* Reports *@
     <section>
         <div class="container">
-            @* table *@
+            @*<div class="form-group">
+                @Html.TextBoxFor(model => model.FileName, new { @class = "form-control", style = "width: 300px;", placeholder = "Add File Name" })
+
+                @Html.DropDownListFor(model => model.FileType,
+                      new[]
+                      {
+                        new SelectListItem() { Text = "DOCX", Value = ".docx" },
+                        new SelectListItem() { Text = "PDF", Value = ".pdf", Selected = true },
+                        new SelectListItem() { Text = "XPS", Value = ".xps" },
+                        new SelectListItem() { Text = "HTML", Value = ".html" },
+                        new SelectListItem() { Text = "MHTML", Value = ".mhtml" },
+                        new SelectListItem() { Text = "RTF", Value = ".rtf" },
+                        new SelectListItem() { Text = "XML", Value = ".xml" },
+                        new SelectListItem() { Text = "TXT", Value = ".txt" },
+                        new SelectListItem() { Text = "PNG", Value = ".png" },
+                        new SelectListItem() { Text = "JPEG", Value = ".jpeg" },
+                        new SelectListItem() { Text = "GIF", Value = ".gif" },
+                        new SelectListItem() { Text = "BMP", Value = ".bmp" },
+                        new SelectListItem() { Text = "TIFF", Value = ".tiff" },
+                        new SelectListItem() { Text = "WMP", Value = ".wmp" }
+                      },
+                        new { @class = "form-control", style = "width: 150px;" })
+            </div>*@
         </div>
 
         @* buttons *@
