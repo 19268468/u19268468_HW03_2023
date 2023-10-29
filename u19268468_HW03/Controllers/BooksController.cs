@@ -56,7 +56,7 @@ namespace u19268468_HW03.Controllers
             {
                 db.books.Add(books);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("StudentsBooksCIndex", "Home");
             }
 
             ViewBag.authorId = new SelectList(db.authors, "authorId", "name", books.authorId);
@@ -92,7 +92,7 @@ namespace u19268468_HW03.Controllers
             {
                 db.Entry(books).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("StudentsBooksCIndex", "Home");
             }
             ViewBag.authorId = new SelectList(db.authors, "authorId", "name", books.authorId);
             ViewBag.typeId = new SelectList(db.types, "typeId", "name", books.typeId);
@@ -122,7 +122,7 @@ namespace u19268468_HW03.Controllers
             books books = await db.books.FindAsync(id);
             db.books.Remove(books);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("StudentsBooksCIndex", "Home");
         }
 
         protected override void Dispose(bool disposing)

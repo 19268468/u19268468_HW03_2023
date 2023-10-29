@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="Models\MaintainModel.cs" />
     <Compile Include="Models\ReportArchiveModel.cs" />
+    <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\students.cs">
       <DependentUpon>LibraryDB.tt</DependentUpon>
     </Compile>

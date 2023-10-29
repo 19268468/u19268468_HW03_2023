@@ -16,5 +16,9 @@ namespace u19268468_HW03.Models
 
         //borrows - Borrows
         public IEnumerable<borrows> Borrows { get; set; }
+
+        //books - Books
+        public IEnumerable<books> Books { get; set; }
+
     }
 }

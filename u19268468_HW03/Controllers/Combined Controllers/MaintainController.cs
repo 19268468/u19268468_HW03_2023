@@ -21,7 +21,8 @@ namespace u19268468_HW03.Controllers
         {
             var viewModels = new MaintainModel()
             {
-                // authors types borrows
+                // authors types borrows books
+                //books = await db.books.Include(a => a.authors).Include(a => a.types).Include(a => a.borrows).ToListAsync(),
                 Authors = await db.authors.ToListAsync(),
                 Types = await db.types.ToListAsync(),
                 Borrows = await db.borrows.Include(b => b.students).Include(b => b.books).ToListAsync()
