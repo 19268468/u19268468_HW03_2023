@@ -53,7 +53,7 @@ namespace u19268468_HW03.Controllers
             {
                 db.authors.Add(authors);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("StudentsBooksCIndex", "Home");
             }
 
             return View(authors);
@@ -85,7 +85,7 @@ namespace u19268468_HW03.Controllers
             {
                 db.Entry(authors).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("StudentsBooksCIndex", "Home");
             }
             return View(authors);
         }
@@ -113,7 +113,7 @@ namespace u19268468_HW03.Controllers
             authors authors = await db.authors.FindAsync(id);
             db.authors.Remove(authors);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("StudentsBooksCIndex", "Home");
         }
 
         protected override void Dispose(bool disposing)
