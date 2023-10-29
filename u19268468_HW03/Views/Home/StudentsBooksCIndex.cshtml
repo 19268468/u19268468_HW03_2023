@@ -1,0 +1,181 @@
+﻿@model u19268468_HW03.Models.StudentsBooksModel
+@{
+    ViewBag.Title = "StudentsBooksCIndex";
+}
+
+<h2 style="font-family:Rockwell">Students and Books </h2>
+<p> Here you will find information regarding the students information, as well as the books on can borrow at the library.</p><br/><br/>
+
+<head>
+    <style>
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            display: none;
+        }
+    </style>
+</head>
+<main>
+    <div class="row">
+        @*Students Section*@
+        <section class="col-md-6">
+            <div class="row">
+                <h4 class="col-md-10">Students</h4>
+                <button type="button" class="btn btn-outline-secondary col-md-2 btn-sm" href="@Url.Action("Create", "Students")">Create</button>
+            </div>
+            <br />
+
+            <table class="table table-warning table-striped table-hover">
+                <thead style="background-color: lightgray">
+                    <tr>
+                        <th> ID </th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Birthdate</th>
+                        <th>Gender</th>
+                        <th>Class</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.Students)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.studentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.surname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.birthdate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.@class)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.point)
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            @*<ul class="pagination pagination-sm">
+                @{
+                    if (!Model.IsFirstPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("StudensBooksCIndex", "Home", new {pageIndex = Model.PageNumber -1})>
+                                Prev
+                            </a>
+                        </li>
+                        }
+                        if(!Model.IsLastPage)
+                        {
+                        <li>
+                            <a class="page-link" href="@Url.Action("StudensBooksCIndex", "Home", new {pageIndex = Model.PageNumber +1})">
+                                Next
+                            </a>
+                        </li>
+                    }
+                }
+                </ul>*@
+        </section>
+
+        @*Books Section*@
+        <section class="col-md-6">
+            <div class="row">
+                <h4 class="col-md-10">Books</h4>
+                <button type="button" class="btn btn-outline-secondary col-md-2 btn-sm" href="@Url.Action("Create", "Books")">Create</button>
+            </div>
+            <br />
+
+            <table class="table table-warning table-striped table-hover">
+                <thead style="background-color: lightgray">
+                    <tr>
+                        <th> ID </th>
+                        <th> Book Name </th>
+                        <th> Page Count </th>
+                        <th> Points </th>
+                        <th> Author Name </th>
+                        <th> Book Type </th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model.Books)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.bookId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.pagecount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.point)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.authors.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.types.name)
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+
+            @*<ul class="pagination pagination-sm">
+                    @{
+                        if (!Model.IsFirstPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("StudensBooksCIndex", "Home", new {pageIndex = Model.PageNumber -1})>
+                                    Prev
+                                </a>
+                            </li>
+                            }
+                            if(!Model.IsLastPage)
+                            {
+                            <li>
+                                <a class="page-link" href="@Url.Action("StudensBooksCIndex", "Home", new {pageIndex = Model.PageNumber +1})">
+                                    Next
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>*@
+        </section>
+    </div>
+
+    <a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
+</main>
+
+<script>
+    $(document).ready(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 50) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        $('#back-to-top').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });
+    });
+</script>

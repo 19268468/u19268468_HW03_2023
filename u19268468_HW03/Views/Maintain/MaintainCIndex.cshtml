@@ -1,0 +1,262 @@
+﻿@model u19268468_HW03.Models.MaintainModel
+@{
+    ViewBag.Title = "MaintainCIndex";
+}
+
+<h2 style="font-family:Rockwell">Maintain </h2>
+<p> Here you will find information regarding the authors, book types and the dates books were lent and returned. 
+    The authors table showcases the authors infomration. The types table showcases the different book types that the library offers. 
+    Finally, the borrows table showcases who borrowed the book, the book borrowed, date it was lent and the return date. </p>
+<br />
+<br />
+
+<main>
+    <div class="row">
+        @*Authors Section*@
+        <section class="col-md-6">
+            <div class="row">
+                <h4 class="col-md-10">Authors</h4>
+                <button type="button" class="btn btn-outline-secondary col-md-2 btn-sm" href="@Url.Action("Create", "Authors")">Create</button>
+            </div> <br/>
+
+            <table class="table table-warning table-striped table-hover">
+                <thead style="background-color: lightgray">
+                    <tr>
+                        <th> ID </th>
+                        <th> Name </th>
+                        <th> Surname </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model.Authors)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.authorId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.surname)
+                            </td>
+                            <td>
+                                <a href="#" class="edit-link" data-url="@Url.Action("Edit", "Authors", new {id = item.authorId})">Update</a>
+                                <a href="#" class="edit-link" data-url="@Url.Action("Delete", "Authors", new {id = item.authorId})">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+
+            @*<ul class="pagination pagination-sm">
+                    @{
+                        if(!Model.IsFirstPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("ReportArchiveCIndex", "ReportArchive", new {pageIndex = Model.PageNumber -1})>
+                                    Prev
+                                </a>
+                            </li>
+                        }
+                        if(!Model.IsLastPage)
+                        {
+                            <li>
+                                <a class="page-link" href="@Url.Action("ReportArchiveCIndex", "ReportArchive", new {pageIndex = Model.PageNumber +1})">
+                                    Next
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>*@
+        </section>
+
+        @*Types Section*@
+        <section class="col-md-6">
+            <div class="row">
+                <h4 class="col-md-10">Types</h4>
+                <button type="button" class="btn btn-outline-secondary col-md-2 btn-sm" href="@Url.Action("Create", "Types")">Create</button>
+            </div><br />
+
+            <table class="table table-warning table-striped table-hover">
+                <thead style="background-color: lightgray">
+                    <tr>
+                        <th> ID </th>
+                        <th> Book Type </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model.Types)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.typeId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                <a href="#" class="edit-link" data-url="@Url.Action("Edit", "Types", new {id = item.typeId})">Update</a>
+                                <a href="#" class="edit-link" data-url="@Url.Action("Delete", "Types", new {id = item.typeId})">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                }
+            </table>
+
+            @*<ul class="pagination pagination-sm">
+                    @{
+                        if(!Model.IsFirstPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("ReportArchiveCIndex", "ReportArchive", new {pageIndex = Model.PageNumber -1})>
+                                    Prev
+                                </a>
+                            </li>
+                        }
+                        if(!Model.IsLastPage)
+                        {
+                            <li>
+                                <a class="page-link" href="@Url.Action("ReportArchiveCIndex", "ReportArchive", new {pageIndex = Model.PageNumber +1})">
+                                    Next
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>*@
+        </section>
+    </div>
+
+
+    @*Borrows Section*@
+<section class="col-md-12">
+    <div class="row">
+        <h4 class="col-md-10">Borrows</h4>
+        <button type="button" class="btn btn-outline-secondary col-md-2 btn-sm" href="@Url.Action("Create", "Borrows")">Create</button>
+    </div>
+    <br />
+
+    <table class="table table-warning table-striped table-hover">
+        <thead style="background-color: lightgray">
+            <tr>
+                <th> ID </th>
+                <th> Student Name </th>
+                <th> Book Name </th>
+                <th> Taken Date </th>
+                <th> Reurn Date </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.Borrows)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.borrowId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.students.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.books.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.takenDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.broughtDate)
+                    </td>
+                    <td>
+                        <a href="#" class="edit-link" data-url="@Url.Action("Edit", "Authors", new {id = item.borrowId})">Update</a>
+                        <a href="#" class="edit-link" data-url="@Url.Action("Delete", "Authors", new {id = item.borrowId})">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+
+        }
+    </table>
+
+    @*<ul class="pagination pagination-sm">
+            @{
+                if(!Model.IsFirstPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("ReportArchiveCIndex", "ReportArchive", new {pageIndex = Model.PageNumber -1})>
+                            Prev
+                        </a>
+                    </li>
+                }
+                if(!Model.IsLastPage)
+                {
+                    <li>
+                        <a class="page-link" href="@Url.Action("ReportArchiveCIndex", "ReportArchive", new {pageIndex = Model.PageNumber +1})">
+                            Next
+                        </a>
+                    </li>
+                }
+            }
+        </ul>*@
+                                                                                
+    <div id="myModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Complete Below</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-content">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</main>
+
+<script>
+    $(function () {
+        // Function to handle Edit link click event in the Combined View and Details modal
+        $(".edit-link, .edit-link-in-modal").click(function (e) {
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $("#modal-content").empty();
+                $("#modal-content").html(data);
+                $("#myModal").modal("show");
+            });
+        });
+
+        // Function to handle form submission within the modal
+        $("#modal-content").on("submit", "form", function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr("action");
+            var formData = form.serialize();
+
+            $.post(url, formData, function (data) {
+                $("#myModal").modal("hide");
+                location.reload();
+            });
+        });
+
+        // Function to handle other links (details, delete, create) within the modal
+        $(".details-link, .delete-link, .create-link, .create-lookup-link").click(function (e) {
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $("#modal-content").empty();
+                $("#modal-content").html(data);
+                $("#myModal").modal("show");
+            });
+        });
+    });
+</script>
