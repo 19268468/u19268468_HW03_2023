@@ -4,7 +4,9 @@
 }
 
 <h2 style="font-family:Rockwell">Students and Books </h2>
-<p> Here you will find information regarding the students information, as well as the books on can borrow at the library.</p><br/><br/>
+<p> Here you will find information regarding the students information, as well as the books on can borrow at the library.</p>
+<br />
+<br />
 
 <head>
     <style>
@@ -18,7 +20,6 @@
 </head>
 <main>
     <div class="row">
-        @*Students Section*@
         <section class="col-md-6">
             <div class="row">
                 <h4 class="col-md-10">Students</h4>
@@ -38,57 +39,46 @@
                         <th>Points</th>
                     </tr>
                 </thead>
-                @foreach (var item in Model.Students)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.studentId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.surname)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.birthdate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.gender)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.@class)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.point)
-                        </td>
-                    </tr>
-                }
+                <tbody id="StudentTable">
+                    @foreach (var item in Model.Students)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.studentId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.surname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.birthdate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.@class)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.point)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
             </table>
 
-            @*<ul class="pagination pagination-sm">
-                @{
-                    if (!Model.IsFirstPage)
-                    {
-                        <li class="page-item">
-                            <a class="page-link" href="@Url.Action("StudensBooksCIndex", "Home", new {pageIndex = Model.PageNumber -1})>
-                                Prev
-                            </a>
-                        </li>
-                        }
-                        if(!Model.IsLastPage)
-                        {
-                        <li>
-                            <a class="page-link" href="@Url.Action("StudensBooksCIndex", "Home", new {pageIndex = Model.PageNumber +1})">
-                                Next
-                            </a>
-                        </li>
-                    }
-                }
-                </ul>*@
+            <div class="col-md-12 text-center">
+                <div class="pagination" id="studentPagination">
+                    <button class="btn btn-secondary" id="prevStudentPage">Previous</button>
+                    <span id="studentPageInfo">Page <span id="currentStudentPage">1</span> of <span id="totalStudentPages">1</span></span>
+                    <button class="btn btn-primary" id="nextStudentPage">Next</button>
+                </div>
+            </div>
         </section>
 
-        @*Books Section*@
         <section class="col-md-6">
             <div class="row">
                 <h4 class="col-md-10">Books</h4>
@@ -107,10 +97,10 @@
                         <th> Book Type </th>
                     </tr>
                 </thead>
+                <tbody id="BookTable">
+                    @foreach (var item in Model.Books)
+                    {
 
-                @foreach (var item in Model.Books)
-                {
-                    <tbody>
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.bookId)
@@ -131,30 +121,17 @@
                                 @Html.DisplayFor(modelItem => item.types.name)
                             </td>
                         </tr>
-                    </tbody>
-                }
+
+                    }
+                </tbody>
+
             </table>
 
-            @*<ul class="pagination pagination-sm">
-                    @{
-                        if (!Model.IsFirstPage)
-                        {
-                            <li class="page-item">
-                                <a class="page-link" href="@Url.Action("StudensBooksCIndex", "Home", new {pageIndex = Model.PageNumber -1})>
-                                    Prev
-                                </a>
-                            </li>
-                            }
-                            if(!Model.IsLastPage)
-                            {
-                            <li>
-                                <a class="page-link" href="@Url.Action("StudensBooksCIndex", "Home", new {pageIndex = Model.PageNumber +1})">
-                                    Next
-                                </a>
-                            </li>
-                        }
-                    }
-                </ul>*@
+            <div class="pagination" id="bookPagination">
+                <button class="btn btn-secondary" id="prevBookPage">Previous</button>
+                <span id="bookPageInfo">Page <span id="currentBookPage">1</span> of <span id="totalBookPages">1</span></span>
+                <button class="btn btn-primary" id="nextBookPage">Next</button>
+            </div>
         </section>
     </div>
 
@@ -177,5 +154,92 @@
             }, 400);
             return false;
         });
+    });
+    //PAGINATION
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const studentTableRows = document.querySelectorAll("#StudentTable tr");
+        const bookTableRows = document.querySelectorAll("#BookTable tr");
+        const itemsPerPage = 5; // Adjust the number of items per page as needed.
+        let currentStudentPage = 1;
+        let currentBookPage = 1;
+
+        // Pagination functions for Student Table
+        function showStudentPage(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            for (let i = 0; i < studentTableRows.length; i++) {
+                studentTableRows[i].style.display = (i >= startIndex && i < endIndex) ? "table-row" : "none";
+            }
+        }
+
+        function updateStudentPaginationInfo() {
+            const totalStudentPages = Math.ceil(studentTableRows.length / itemsPerPage);
+            document.getElementById("currentStudentPage").textContent = currentStudentPage;
+            document.getElementById("totalStudentPages").textContent = totalStudentPages;
+        }
+
+        function prevStudentPage() {
+            if (currentStudentPage > 1) {
+                currentStudentPage--;
+                showStudentPage(currentStudentPage);
+                updateStudentPaginationInfo();
+            }
+        }
+
+        function nextStudentPage() {
+            const totalStudentPages = Math.ceil(studentTableRows.length / itemsPerPage);
+            if (currentStudentPage < totalStudentPages) {
+                currentStudentPage++;
+                showStudentPage(currentStudentPage);
+                updateStudentPaginationInfo();
+            }
+        }
+
+        // Pagination functions for Book Table
+        function showBookPage(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            for (let i = 0; i < bookTableRows.length; i++) {
+                bookTableRows[i].style.display = (i >= startIndex && i < endIndex) ? "table-row" : "none";
+            }
+        }
+
+        function updateBookPaginationInfo() {
+            const totalBookPages = Math.ceil(bookTableRows.length / itemsPerPage);
+            document.getElementById("currentBookPage").textContent = currentBookPage;
+            document.getElementById("totalBookPages").textContent = totalBookPages;
+        }
+
+        function prevBookPage() {
+            if (currentBookPage > 1) {
+                currentBookPage--;
+                showBookPage(currentBookPage);
+                updateBookPaginationInfo();
+            }
+        }
+
+        function nextBookPage() {
+            const totalBookPages = Math.ceil(bookTableRows.length / itemsPerPage);
+            if (currentBookPage < totalBookPages) {
+                currentBookPage++;
+                showBookPage(currentBookPage);
+                updateBookPaginationInfo();
+            }
+        }
+
+        // Initialize both tables and their pagination controls
+        showStudentPage(currentStudentPage);
+        updateStudentPaginationInfo();
+        showBookPage(currentBookPage);
+        updateBookPaginationInfo();
+
+        // Add event listeners for pagination buttons for both tables
+        document.getElementById("studentPagination").querySelector("#prevStudentPage").addEventListener("click", prevStudentPage);
+        document.getElementById("studentPagination").querySelector("#nextStudentPage").addEventListener("click", nextStudentPage);
+        document.getElementById("bookPagination").querySelector("#prevBookPage").addEventListener("click", prevBookPage);
+        document.getElementById("bookPagination").querySelector("#nextBookPage").addEventListener("click", nextBookPage);
     });
 </script>
